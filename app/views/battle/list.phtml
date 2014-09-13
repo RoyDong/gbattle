@@ -1,0 +1,27 @@
+<? $t->layout = 'layout/main' ?>'
+
+<? $t->block('content') ?>
+<div class="medium-12 columns">
+    <div class="row" style="margin-top: 50px">
+        <div class="medium-8 columns"><h1>横幅</h1></div>
+        <div class="medium-4 columns">
+            <form>
+                <div class="row">
+                    <div class="large-12 columns">
+                        <label>邮箱
+                            <input type="text" placeholder="name@mail.com" />
+                        </label>
+                    </div>
+                    <div class="large-12 columns">
+                        <label>密码
+                            <input type="password" />
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <hr/>
+    </div>
+</div>
+</div>
+<? $t->end() ?>
