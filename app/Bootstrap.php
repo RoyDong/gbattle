@@ -6,7 +6,7 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
         $conf = Yaf\Application::app()->getConfig();
         $dispatcher->getRouter()->addConfig($conf->routes);
 
-        $view = new service\Template($conf->application->view->ext);
+        $view = new core\Template($conf->application->view->ext);
         $view->setScriptPath(APP_PATH . '/app/views');
         $dispatcher->setView($view);
     }

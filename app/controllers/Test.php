@@ -9,6 +9,6 @@
 class TestController extends BaseController {
 
     public function indexAction() {
-        $this->render('test/show', array('name' => 'Roy'));
+        $this->render('test/show', array('id' => 10000, 'name' => 'Roy', 'desc' => 'hehe'));
     }
 }

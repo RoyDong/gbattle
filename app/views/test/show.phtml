@@ -1,1 +1,7 @@
-<?=$name?>
+<?$t->layout = 'layout/main'?>
+<?$t->block('title')?>Test show title<?$t->end()?>
+
+<?$t->block('content')?>
+    <?$t->contain('test/_form')?>
+    <h3>Name: <?=$name?></h3>
+<?$t->end()?>

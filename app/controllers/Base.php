@@ -4,18 +4,16 @@ class BaseController extends Yaf\Controller_Abstract {
 
     protected $yafAutoRender = false;
 
-    protected $layout = '';
-
     public function get($name, $default = null) {
         $val = $this->getRequest()->getParam($name, $default);
         if ($val != null) {
             return $val;
         }
-        if (isset($_GET[$name])) {
-            return $_GET[$name];
-        }
         if (isset($_POST[$name])) {
             return $_POST[$name];
+        }
+        if (isset($_GET[$name])) {
+            return $_GET[$name];
         }
         return $default;
     }
