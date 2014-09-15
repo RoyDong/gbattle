@@ -4,14 +4,20 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
 
 	public function _init(Yaf\Dispatcher $dispatcher) {
         $conf = Yaf\Application::app()->getConfig();
+        Yaf\Registry::set('conf', $conf);
         $dispatcher->getRouter()->addConfig($conf->routes);
 
-        $view = new core\Template($conf->application->view->ext);
+        Yaf\Loader::import(APP_PATH . '/app/core/functions.php');
+        foreach(glob(APP_PATH.'/app/functions/*.php') as $file) {
+            Yaf\Loader::import($file);
+        }
+
+		$dispatcher->registerPlugin(new MainPlugin);
+    }
+
+    public function _initView(Yaf\Dispatcher $dispatcher) {
+        $view = new core\Template();
         $view->setScriptPath(APP_PATH . '/app/views');
         $dispatcher->setView($view);
     }
-
-	public function _initPlugin(Yaf\Dispatcher $dispatcher) {
-		$dispatcher->registerPlugin(new MainPlugin);
-	}
 }

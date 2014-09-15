@@ -1,6 +1,10 @@
 <?php
 
-class BaseController extends Yaf\Controller_Abstract {
+
+use Yaf\Controller_Abstract as Controller;
+use model\Base as Model;
+
+class BaseController extends Controller {
 
     protected $yafAutoRender = false;
 
@@ -18,13 +22,22 @@ class BaseController extends Yaf\Controller_Abstract {
         return $default;
     }
 
+    /**
+     * 
+     * @param string $name
+     * @return Model
+     */
+    public function model($name) {
+        return Model::instance($name);
+    }
+
     public function render($tpl, array $vars = array()) {
         $view = $this->getView();
         $view->render($tpl, $vars);
         $this->getResponse()->setBody($view->getContent());
     }
 
-    public function renderJson($data = null, $msg = 'done', $code = 0) {
+    public function renderJson($data = null, $msg = 'ok', $code = 0) {
         $json = json_encode(['msg' => $msg, 'code' => $code, 'data' => $data], 
                 JSON_UNESCAPED_UNICODE);
         header('Content-Type: application/json');

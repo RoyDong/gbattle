@@ -3,7 +3,7 @@
 namespace core;
 
 use Yaf\View_Interface;
-use core\Exception;
+use Yaf\Registry;
 
 
 class Template implements View_Interface {
@@ -23,21 +23,11 @@ class Template implements View_Interface {
 
     private $child = true;
 
-    public $layout;
+    private $layout;
 
     public function __construct($ext = 'phtml') {
         $this->ext = $ext;
         $this->vars['t'] = $this;
-    }
-
-    public function __get($name) {
-        if (isset($this->vars[$name])) {
-            return $this->vars[$name];
-        }
-    }
-
-    public function __set($name, $value) {
-        $this->vars[$name] = $value;
     }
 
     public function getScriptPath() {
@@ -86,9 +76,8 @@ class Template implements View_Interface {
         ob_end_clean();
     }
 
-    public function contain($tpl, $vars = array()) {
+    private function contain($tpl) {
         extract($this->vars);
-        extract($vars);
         require $this->dir . '/' . $tpl . '.' . $this->ext;
     }
 

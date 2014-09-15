@@ -6,9 +6,11 @@
  * and open the template in the editor.
  */
 
-class TestController extends BaseController {
 
-    public function indexAction() {
-        $this->render('test/show', array('id' => 10000, 'name' => 'Roy', 'desc' => 'hehe'));
-    }
+function G($name) {
+    return Yaf\Registry::get($name);
+}
+
+function S($name, $value) {
+    Yaf\Registry::set($name, $value);
 }

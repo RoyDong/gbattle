@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title><? $t->block('title') ?>G Battle<? $this->end() ?></title>
         <link href="/css/foundation.min.css" rel="stylesheet">
+        <link href="/css/common.css" rel="stylesheet">
         <? $t->block('css') ?><? $t->end() ?>
     </head>
     <body>
@@ -16,19 +17,19 @@
             <section class="top-bar-section">
                 <ul class="right">
                     <li class="has-dropdown">
-                        <a href="#">你好，<?=$name?></a>
+                        <a href="#">你好，<?=name_or_email(G('srv/user')->current())?></a>
                         <ul class="dropdown">
                             <li><a href="/home">个人中心</a></li>
                             <li><a href="/notice">通知</a></li>
                         </ul>
                     </li>
-                    <li class="active"><a href="/siginout">退出</a></li>
+                    <li><a href="/signout">退出</a></li>
                 </ul>
             </section>
         </nav>
         <div class="row"><? $t->block('content') ?><? $this->end() ?></div>
         <div class="row">
-            <div class="medium-12 text-center">Copyright &copy 2014 Gumdam Battle Team</div>
+            <div class="medium-12 text-center">Copyright &copy 2014 Gundam Battle Team</div>
         </div>
         <script src="/js/jquery.min.js"></script>
         <script src="/js/foundation.min.js"></script>
