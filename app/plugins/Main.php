@@ -12,7 +12,8 @@ class MainPlugin extends Yaf\Plugin_Abstract {
 	}
 
 	public function dispatchLoopStartup(Request $request, Response $response) {
-        S('srv/user', service\User::instance());
+        S('request', $request);
+        S('response', $response);
 	}
 
 	public function preDispatch(Request $request, Response $response) {

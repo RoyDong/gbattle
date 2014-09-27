@@ -1,5 +1,24 @@
 <? $t->layout = 'layout/main' ?>
 
 <? $t->block('content') ?>
-
+<div class="small-12 columns" style="margin-top: 30px;">
+    <div class="row">
+        <div class="small-3 columns">
+            <img src="/img/roy.jpg" style="width: 120px"/>
+        </div>
+        <div class="small-9 columns">
+            <div class="row">
+                    名称：<?=$user['name']?>
+            </div>
+            <div class="row">
+                    邮箱：<?=$user['email']?>
+            </div>
+            <div class="row">
+                    注册时间：<?=$user['created']?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    </div>
+</div>
 <? $t->end() ?>

@@ -155,4 +155,13 @@ class User {
     public function error() {
         return array_pop($this->errors);
     }
+
+    private $role;
+
+    public function isGranted($role) {
+        if ($this->current()) {
+            $this->role = 'user';
+        }
+        return $role === $this->role;
+    }
 }

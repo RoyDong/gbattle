@@ -44,6 +44,7 @@ class UserController extends BaseController {
     }
 
     public function homeAction() {
+        allow_or_go('user', '/');
         $user = \service\User::instance()->current();
         $this->render('user/home', array('user' => $user));
     }
