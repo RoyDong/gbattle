@@ -3,22 +3,48 @@
 <? $t->block('content') ?>
 <div class="small-12 columns" style="margin-top: 30px;">
     <div class="row">
-        <div class="small-3 columns">
-            <img src="/img/roy.jpg" style="width: 120px"/>
-        </div>
-        <div class="small-9 columns">
-            <div class="row">
-                    名称：<?=$user['name']?>
+        <div class="small-3 columns text-center">
+            <div class="row" >
+                <div class="small-12 columns">
+                    <img src="/img/roy.jpg" style="height: 180px"/>
+                </div>
             </div>
-            <div class="row">
-                    邮箱：<?=$user['email']?>
-            </div>
-            <div class="row">
-                    注册时间：<?=$user['created']?>
+            <div class="row" >
+                <a href="#" data-reveal-id="upload-avatar">上传图片</a>
             </div>
         </div>
+        <div class="small-4 columns left">
+            <form action="/user/edit" method="post" >
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>名称
+                            <input type="text" value="<?= $user['name'] ?>"/>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>邮箱
+                            <input type="text" value="<?= $user['email'] ?>"/>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <button class="tiny">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="row">
-    </div>
+    <div class="row"> </div>
+</div>
+<div id="upload-avatar" class="reveal-modal small" data-reveal>
+    <form action="/upload/avatar" method="post" enctype="multipart/form-data">
+        <h3>上传头像</h3>
+        <p><input name="image" type="file"/></p>
+        <button class="button tiny">提交</button>
+    </form>
+    <a class="close-reveal-modal">&#215;</a>
 </div>
 <? $t->end() ?>

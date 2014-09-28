@@ -3,7 +3,6 @@
 namespace core;
 
 use Yaf\View_Interface;
-use Yaf\Registry;
 
 
 class Template implements View_Interface {

@@ -1,51 +1,53 @@
 <?php
 
+use core\Controller;
 
-use model\Base as Model;
-
-class UserController extends BaseController {
+class UserController extends Controller {
 
     public function signupAction() {
-        $email = $this->get('email');
+        $name = $this->get('name');
         $pass = $this->get('pass');
+        $url = $this->get('rt', '/');
 
-        $userService = \service\User::instance();
-        if ($userService->signup($email, $pass)) {
-            $userService->rememberMe();
-            $this->redirect('/home');
-        } else {
-            $this->redirect('/');
+        $userModel = $this->model('User');
+        if ($user = $userModel->signup($name, $pass)) {
+            $userModel->signin($user);
+            $userModel->rememberMe();
         }
+
+        $this->redirect($url);
     }
 
     public function signinAction() {
-        $email = $this->get('email');
+        $name = $this->get('name');
         $pass = $this->get('pass');
+        $url = $this->get('rt', '/');
 
-        $user = Model::instance('User')->find(['email' => $email]);
-        if (!$user) {
-            $this->redirect('/');
-            return;
+        $user = Model::instance('User')->find(['name' => $name]);
+        if ($user) {
+            $userService = \service\User::instance();
+            if ($userService->checkPass($user, $pass)) {
+                $userService->signin($user);
+                $userService->rememberMe();
+                $this->redirect('/home');
+            }
         }
 
-        $userService = \service\User::instance();
-        if ($userService->checkPass($user, $pass)) {
-            $userService->signin($user);
-            $userService->rememberMe();
-            $this->redirect('/home');
-        } else {
-            $this->redirect('/');
-        }
+        $this->redirect($url);
     }
 
     public function signoutAction() {
-        service\User::instance()->signout();
+        $this->model('User')->signout();
         $this->redirect('/');
     }
 
     public function homeAction() {
         allow_or_go('user', '/');
-        $user = \service\User::instance()->current();
+        $user = $this->model('User')->current();
         $this->render('user/home', array('user' => $user));
+    }
+
+    public function editAction() {
+        allow_or_go('user', '/');
     }
 }

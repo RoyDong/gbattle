@@ -1,15 +1,10 @@
 <?php
 
+use core\Controller;
 
-use model\Base as Model;
-
-class BattleController extends BaseController {
+class BattleController extends Controller {
 
     public function listAction() {
-        $pdo = Model::PDO();
-
-
-
         $this->render('battle/list', ['name' => 'Roy']);
     }
 }

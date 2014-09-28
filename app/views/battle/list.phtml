@@ -1,53 +1,57 @@
 <? $t->layout = 'layout/main' ?>'
 
 <? $t->block('content') ?>
-<div class="small-12 columns panel" style="margin-top: 30px;">
-    <div class="row">
-        <div class="small-8 columns">
-            <h1>Gundam Battle</h1>
-        </div>
-        <div class="small-4 columns">
-            <dl class="tabs" data-tab>
-                <dd class="active"><a href="#panel1">注册</a></dd>
-                <dd class="tiny"><a href="#panel2">登录</a></dd>
-            </dl>
-            <div class="tabs-content">
-                <div class="content active" id="panel1">
-                    <form action="/signup" method="post">
-                        <div class="row">
-                            <div class="small-12 columns">
-                                <label>邮箱
-                                    <input name="email" type="text"/>
-                                </label>
+<? if (!M('User')->current()): ?>
+    <div class="small-12 columns panel" style="margin-top: 30px;">
+        <div class="row">
+            <div class="small-8 columns">
+                <h1>G Battle</h1>
+            </div>
+            <div class="small-4 columns">
+                <dl class="tabs" data-tab>
+                    <dd class="active"><a href="#panel1">注册</a></dd>
+                    <dd class="tiny"><a href="#panel2">登录</a></dd>
+                </dl>
+                <div class="tabs-content">
+                    <div class="content active" id="panel1">
+                        <form action="/signup" method="post">
+                            <input type="hidden" name="rt" value="/home" />
+                            <div class="row">
+                                <div class="small-12 columns">
+                                    <label>名称
+                                        <input name="name" type="text"/>
+                                    </label>
+                                </div>
+                                <div class="small-12 columns">
+                                    <label>密码
+                                        <input name="pass" type="password"/>
+                                    </label>
+                                </div>
+                                <div class="small-12 columns"><button class="small button">确定</button></div>
                             </div>
-                            <div class="small-12 columns">
-                                <label>密码
-                                    <input name="pass" type="password"/>
-                                </label>
+                        </form>
+                    </div>
+                    <div class="content" id="panel2">
+                        <form action="/signin" method="post">
+                            <input type="hidden" name="rt" value="/home" />
+                            <div class="row">
+                                <div class="small-12 columns">
+                                    <label>名称
+                                        <input name="name" type="text"/>
+                                    </label>
+                                </div>
+                                <div class="small-12 columns">
+                                    <label>密码
+                                        <input name="pass" type="password"/>
+                                    </label>
+                                </div>
+                                <div class="small-12 columns"><button class="small button">确定</button></div>
                             </div>
-                            <div class="small-12 columns"><button class="small button">确定</button></div>
-                        </div>
-                    </form>
-                </div>
-                <div class="content" id="panel2">
-                    <form action="/signin" method="post">
-                        <div class="row">
-                            <div class="small-12 columns">
-                                <label>邮箱
-                                    <input name="email" type="text"/>
-                                </label>
-                            </div>
-                            <div class="small-12 columns">
-                                <label>密码
-                                    <input name="pass" type="password"/>
-                                </label>
-                            </div>
-                            <div class="small-12 columns"><button class="small button">确定</button></div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+<? endif ?>
 <? $t->end() ?>

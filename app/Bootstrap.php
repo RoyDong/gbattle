@@ -7,7 +7,7 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
         Yaf\Registry::set('conf', $conf);
         $dispatcher->getRouter()->addConfig($conf->routes);
 
-        Yaf\Loader::import(APP_PATH . '/app/core/functions.php');
+        Yaf\Loader::import(APP_PATH . '/app/core/main.php');
         foreach(glob(APP_PATH.'/app/functions/*.php') as $file) {
             Yaf\Loader::import($file);
         }
@@ -22,6 +22,5 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
     }
 
     public function _initService() {
-        S('srv/user', service\User::instance());
     }
 }

@@ -6,11 +6,3 @@
  * and open the template in the editor.
  */
 
-
-function G($name) {
-    return Yaf\Registry::get($name);
-}
-
-function S($name, $value) {
-    Yaf\Registry::set($name, $value);
-}
