@@ -1,0 +1,30 @@
+<? $t->layout = 'layout/main' ?>
+
+
+<? $t->block('content') ?>
+<div class="small-6 columns" style="margin-top: 30px;">
+<table>
+    <thead>
+        <tr>
+            <th width="200">图片</th>
+            <th width="100">状态</th>
+            <th width="100">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <? foreach ($images as $img): ?>
+            <tr>
+                <td><img src="<?= $img['url'] ?>" style="width: 200px;"/></td>
+                <td><?=image_state($img)?></td>
+                <td><button class="button tiny">更改</button></td>
+            </tr>
+        <? endforeach ?>
+    </tbody>
+</table>
+    <a href="/admin?page=<?=$page - 1?>" class="small button">上一页</a>
+    <a href="/admin?page=<?=$page + 1?>" class="small button">下一页</a>
+</div>
+<div class="small-6 columns" style="margin-top: 30px;">
+    <h3>邀请码:</h3>
+</div>
+<? $t->end() ?>

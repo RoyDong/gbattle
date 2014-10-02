@@ -10,13 +10,38 @@ use core\Controller;
 class ImageController extends Controller {
 
 
-    public function uploadAction() {
+    public function uploadWorkAction() {
+        $url = $this->get('rt', '/');
+
         if (isset($_FILES['image'])) {
             $file = $_FILES['image'];
-            if ($file['error'] == 0 && $file['size'] <= 1024 * 1024 * 4) {
-                $md5 = md5_file($file['tmp_name']);
-                move_uploaded_file($file['tmp_name'], APP_PATH.'/public/img/'.$md5);
+            if ($file['error'] == 0) {
+                $tid = $this->get('item');
+                $content = file_get_contents($file['tmp_name']);
+                $user = M('User')->current();
+                M('Image')->save($content, $user['id'], $tid);
             }
         }
+
+        //$this->redirect($url);
+    }
+
+    public function uploadAvatarAction() {
+        $url = $this->get('rt', '/');
+
+        if (isset($_FILES['image'])) {
+            $file = $_FILES['image'];
+            if ($file['error'] == 0) {
+                $content = file_get_contents($file['tmp_name']);
+                $user = M('User')->current();
+                $img = M('Avatar')->save($content, $user['id']);
+                if ($img) {
+                    $user['avatar_id'] = $img['id'];
+                    M('User')->save($user);
+                }
+            }
+        }
+
+        $this->redirect($url);
     }
 }

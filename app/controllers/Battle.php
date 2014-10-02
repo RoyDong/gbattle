@@ -5,6 +5,13 @@ use core\Controller;
 class BattleController extends Controller {
 
     public function listAction() {
-        $this->render('battle/list', ['name' => 'Roy']);
+        $page = (int)$this->get('page');
+        if ($page < 1) {
+            $page = 1;
+        }
+
+        $this->render('battle/list', array(
+            'works' => M('Work')->all($page),
+        ));
     }
 }

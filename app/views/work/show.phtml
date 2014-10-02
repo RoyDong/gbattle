@@ -1,0 +1,7 @@
+<? $t->layout = 'layout/main' ?>
+
+<? $t->block('content') ?>
+    <? foreach($images as $img): ?>
+<img src="<?=$img['url']?>" style="width: 200px"/>
+    <? endforeach ?>
+<? $t->end() ?>

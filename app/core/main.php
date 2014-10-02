@@ -13,19 +13,19 @@
 namespace {
 
     use core\Model;
+    use Yaf\Registry;
 
     function G($name) {
-        return Yaf\Registry::get($name);
+        return Registry::get($name);
     }
 
     function S($name, $value) {
-        Yaf\Registry::set($name, $value);
+        Registry::set($name, $value);
     }
 
     function M($name) {
         return Model::instance($name);
     }
-
 }
 
 namespace core {
@@ -37,7 +37,7 @@ namespace core {
         protected $yafAutoRender = false;
 
         public function get($name, $default = null) {
-            $val = $this->getRequest()->getParam($name, $default);
+            $val = $this->getRequest()->getParam($name);
             if ($val != null) {
                 return $val;
             }
@@ -48,15 +48,6 @@ namespace core {
                 return $_GET[$name];
             }
             return $default;
-        }
-
-        /**
-         * 
-         * @param string $name
-         * @return Model
-         */
-        public function model($name) {
-            return Model::instance($name);
         }
 
         public function render($tpl, array $vars = array()) {
@@ -178,13 +169,17 @@ namespace core {
         public function findAll($cond, $limit, $offset) {
             $cols = array();
             $vals = array();
-            foreach ($cond as $key => $val) {
-                $cols[] = "`$key` = ?";
-                $vals[] = $val;
+            $sql = "SELECT * FROM `{$this->table}`";
+            if (count($cond) > 0) {
+                foreach ($cond as $key => $val) {
+                    $cols[] = "`$key` = ?";
+                    $vals[] = $val;
+                }
+                
+                $sql = "$sql WHERE " . implode(' AND ', $cols);
             }
 
-            $sql = "SELECT * FROM `{$this->table}` WHERE " .
-                    implode(' AND ', $cols) . " limit $offset, $limit";
+            $sql = "$sql limit $offset, $limit";
             $stmt = Model::PDO()->prepare($sql);
             foreach ($vals as $i => $val) {
                 $stmt->bindValue($i + 1, $val);
@@ -193,6 +188,5 @@ namespace core {
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
-
     }
 }

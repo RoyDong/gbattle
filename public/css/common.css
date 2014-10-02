@@ -22,3 +22,7 @@ form {
 .button {
     margin: 0;
 }
+
+.none {
+    display: none;
+}

@@ -1,0 +1,32 @@
+<? $t->layout = 'layout/main' ?>
+
+<? $t->block('content') ?>
+<center><h3><button id="vote-btn" class="button small">投票(<?=$work['vote']?>)</button></h3></center>
+<? foreach ($images as $img): ?>
+    <img src="<?= $img['url'] ?>" style="width: 200px"/>
+<? endforeach ?>
+<? $t->end() ?>
+
+<? $t->block('js') ?>
+<script>
+    var btn = $('#vote-btn');
+    btn.click(function() {
+        $.ajax({
+            url: '/vote/<?=$work['id']?>',
+            method: 'post',
+            data_type: 'json',
+            success: function(data) {
+                if (data.code > 0) {
+                    alert(data.msg);
+                } else {
+                    btn.text('投票(' + data.data + ')');
+                    btn.attr('disabled', true);
+                }
+            },
+            failure: function() {
+
+            }
+        });
+    });
+</script>
+<? $t->end() ?>

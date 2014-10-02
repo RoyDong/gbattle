@@ -20,7 +20,4 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
         $view->setScriptPath(APP_PATH . '/app/views');
         $dispatcher->setView($view);
     }
-
-    public function _initService() {
-    }
 }

@@ -6,7 +6,8 @@
  * and open the template in the editor.
  */
 
-use core\Model;
+
+use model\Image;
 
 function name_or_email($user) {
     return empty($user['name']) ? $user['email'] : $user['name'];
@@ -14,7 +15,7 @@ function name_or_email($user) {
 
 
 function allow_or_go($role, $url) {
-    if (!Model::instance('User')->isGranted($role)) {
+    if (!M('User')->isGranted($role)) {
         header('Location: '.$url);
         exit;
     }
@@ -26,4 +27,13 @@ function work_image($image) {
 
 function avatar($avatar) {
     return '/img/'.$avatar['md5'].'.'.$avatar['ext'];
+}
+
+function image_state($image) {
+    if ($image['state'] == Image::STATE_UNVERIFIED) {
+        return '未审核';
+    }
+    if ($image['state'] == Image::STATE_VERIFIED) {
+        return '已审核';
+    }
 }

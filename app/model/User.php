@@ -69,7 +69,7 @@ class User extends Model {
         return $user ? 1 : 0;
     }
 
-    public function signup($name, $pass) {
+    public function signup($name, $pass, $code) {
         if ($this->exists($name)) {
             $this->errors[] = 'user exists';
             return false;
@@ -82,6 +82,15 @@ class User extends Model {
 
         if (!$pass) {
             $this->errors[] = 'pass error';
+            return false;
+        }
+
+        $code = $this->instance('InvitationCode')->find(array(
+            'code' => $code,
+            'state' => InvitationCode::STATE_AVAILABLE,
+        ));
+
+        if (!$code) {
             return false;
         }
 
@@ -148,5 +157,23 @@ class User extends Model {
             $this->role = 'user';
         }
         return $role === $this->role;
+    }
+
+    public function save($user) {
+        $stmt = $this->getUpdateStmt($user, '`id` = ?', array($user['id']));
+        $stmt->execute();
+        return true;
+    }
+
+    public function findByIds($ids) {
+        $sql = 'select * from `'.$this->table.'` where `id` in ('.implode(',', $ids).')';
+        $stmt = Model::PDO()->prepare($sql);
+        $stmt->execute();
+        $users = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $return = array();
+        foreach($users as $user) {
+            $return[$user['id']] = $user;
+        }
+        return $return;
     }
 }
