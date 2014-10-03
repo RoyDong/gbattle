@@ -166,6 +166,9 @@ class User extends Model {
     }
 
     public function findByIds($ids) {
+        if (empty($ids)) {
+            return array();
+        }
         $sql = 'select * from `'.$this->table.'` where `id` in ('.implode(',', $ids).')';
         $stmt = Model::PDO()->prepare($sql);
         $stmt->execute();

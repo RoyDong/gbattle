@@ -52,6 +52,13 @@ class Image extends Model {
         return $img;
     }
 
+    public function changeState($img) {
+        $img['state'] = 1 - $img['state'];
+        $stmt = $this->getUpdateStmt($img, '`id` = ?', array($img['id']));
+        $stmt->execute();
+        return $img;
+    }
+
     public function isAllowedFormat($ext) {
         return in_array($ext, array('jpeg', 'png', 'jpg'));
     }
@@ -78,12 +85,7 @@ class Image extends Model {
         return $return;
     }
 
-    public function findByWid($wid, $page = 1, $size = 20) {
-        if ($wid <= 0) {
-            $cond = null;
-        } else {
-            $cond = array('work_id' => $wid);
-        }
+    public function findBy($cond, $page = 1, $size = 20) {
         $images = $this->findAll($cond, $size, ($page - 1) * $size);
         foreach($images as &$image) {
             $image['url'] = $this->url($image);

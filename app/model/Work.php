@@ -72,6 +72,7 @@ class Work extends Model {
         $items = $this->instance('Item')->all();
 
         $imgIds = array();
+        $userIds = array();
         foreach($works as &$work) {
             $item = $items[$work['item_id']];
             $imgIds[] = $work['cover_image_id'];

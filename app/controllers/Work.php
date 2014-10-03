@@ -9,6 +9,8 @@
 
 use core\Controller;
 
+use model\Image;
+
 class WorkController extends Controller {
 
     public function uploadAction() {
@@ -38,6 +40,7 @@ class WorkController extends Controller {
     }
     
     public function showAction() {
+        allow_or_go('user', '/');
         $wid = (int)$this->get('wid');
 
         $images = M('Image')->findByWid($wid);
@@ -60,8 +63,10 @@ class WorkController extends Controller {
             }
             return;
         }
-
-        $images = M('Image')->findByWid($wid);
+        $images = M('Image')->findBy(array(
+            'work_id' => $wid,
+            'state' => Image::STATE_VERIFIED,
+        ));
         $this->render('work/vote', array(
             'work' => M('Work')->get($wid),
             'images' => $images,

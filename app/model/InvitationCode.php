@@ -24,7 +24,7 @@ class InvitationCode extends Model {
     public function generate($num) {
         $codes = array();
         for($i = 0; $i < $num; $i++) {
-            $code = substr(md5(time().uniqid(true)), 0, 5);
+            $code = md5(time().uniqid(true));
             $data = array(
                 'code' => $code,
                 'state' => InvitationCode::STATE_AVAILABLE,

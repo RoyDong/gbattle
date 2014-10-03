@@ -15,8 +15,8 @@
         <? foreach ($images as $img): ?>
             <tr>
                 <td><img src="<?= $img['url'] ?>" style="width: 200px;"/></td>
-                <td><?=image_state($img)?></td>
-                <td><button class="button tiny">更改</button></td>
+                <td id="img-state-<?=$img['id']?>"><?=image_state($img)?></td>
+                <td><button data-id="<?=$img['id']?>" class="button tiny verify-img">更改</button></td>
             </tr>
         <? endforeach ?>
     </tbody>
@@ -25,6 +25,55 @@
     <a href="/admin?page=<?=$page + 1?>" class="small button">下一页</a>
 </div>
 <div class="small-6 columns" style="margin-top: 30px;">
-    <h3>邀请码:</h3>
+    <h3><button id="gen-code-btn" class="button small">生成邀请码</button></h3>
+    <textarea rows="20" id="code-list"></textarea>
 </div>
+<? $t->end() ?>
+
+<? $t->block('js') ?>
+<script>
+    $('.verify-img').click(function(){
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/admin/image/verify',
+            data: {id: id},
+            type: 'post',
+            data_type: 'json',
+            success: function(data) {
+                if (data.code > 0) {
+                    alert(data.msg);
+                }else{
+                    $('#img-state-' + id).text(data.data);
+                }
+            },
+            failure: function() {
+
+            }
+        });
+    });
+
+    $('#gen-code-btn').click(function(){
+        $.ajax({
+            url: '/admin/gen-code',
+            type: 'post',
+            data_type: 'json',
+            success: function(data) {
+                if (data.code > 0) {
+                    alert(data.msg);
+                }else{
+                    var codes = data.data;
+                    var lines = [];
+                    for(var i = 0; i < codes.length; i++) {
+                        lines.push(codes[i].code);
+                    }
+
+                    $('#code-list').text(lines.join("\n"));
+                }
+            },
+            failure: function() {
+
+            }
+        });
+    });
+</script>
 <? $t->end() ?>
