@@ -43,7 +43,7 @@ class WorkController extends Controller {
         allow_or_go('user', '/');
         $wid = (int)$this->get('wid');
 
-        $images = M('Image')->findByWid($wid);
+        $images = M('Image')->findBy(['work_id' => $wid]);
         $this->render('work/show', array(
             'images' => $images,
         ));

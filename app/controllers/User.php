@@ -10,7 +10,7 @@ class UserController extends Controller {
         $code = $this->get('code');
         $url = $this->get('rt', '/');
 
-        $userModel = $this->model('User');
+        $userModel = M('User');
         if ($user = $userModel->signup($name, $pass, $code)) {
             $userModel->signin($user);
             $userModel->rememberMe();
