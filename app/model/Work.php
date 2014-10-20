@@ -58,7 +58,7 @@ class Work extends Model {
     }
 
     public function all($page, $size = 100) {
-        $works = $this->findAll(['state' => 1], $size, ($page - 1) * $size);
+        $works = $this->findAll(null, $size, ($page - 1) * $size);
         return $this->info($works);
     }
 
