@@ -32,9 +32,6 @@ class Avatar extends Model {
         }
         $imagic->readimageblob($content);
         $ext = strtolower($imagic->getimageformat());
-        if (!$this->isAllowedFormat($ext)) {
-            return false;
-        }
         file_put_contents(APP_PATH . '/public/img/avatar/'. $sha1 .'.'.$ext, $content);
         $img = array(
             'user_id' => $uid,
