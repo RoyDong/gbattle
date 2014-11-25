@@ -81,7 +81,7 @@ namespace core {
          */
         public static function PDO() {
             if (empty(Model::$pdo)) {
-                $db = \Yaf\Application::app()->getConfig()->db;
+                $db = G('db');
                 if (!$db) {
                     throw new Exception('db config not found');
                 }
